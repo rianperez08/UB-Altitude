@@ -93,6 +93,23 @@ screens still sync through the browser's BroadcastChannel — but only windows/t
 browser profile**. That is fine for a laptop demo (open the IFE, then open the window and
 leaderboard from the operator panel); at the venue use the server.
 
+### Hosted preview on Netlify
+
+The Netlify project is **ub-altitude** (https://app.netlify.com/projects/ub-altitude, live at
+https://ub-altitude.netlify.app once a deploy has run). It is a static deploy of this repo
+(`netlify.toml` publishes the repo root, no build step), so it is ideal for reviewing the screens
+on any laptop or phone: open `/` and use the operator panel to pop open the window and leaderboard
+in new windows — they sync through the browser. For the venue itself run `npm start` on the booth
+PC (the hosted copy has no sync relay between separate kiosk windows or PCs).
+
+Deploys come from the GitHub repo: in Netlify, **Project configuration → Build & deploy →
+Continuous deployment → Link repository** → `rianperez08/UB-Altitude`, then every push to the
+production branch publishes. A manual deploy from a machine logged into Netlify:
+
+```bash
+npx netlify-cli deploy --prod --dir . --site 153ffeba-8c60-46bd-83f2-0bb5a2177fba
+```
+
 ### Venue: one PC, several monitors
 
 1. `npm start` on the PC.
