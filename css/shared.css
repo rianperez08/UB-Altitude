@@ -1,0 +1,74 @@
+/* The Altitude Test — shared look: copper brushed metal, white pills, dot-matrix boards. */
+:root {
+  --copper: #b96b4e; --copper-deep: #8f452c; --copper-dark: #5e2a1a; --cream: #f3ece3; --ink: #0b0908; --white: #fff;
+  --font: "Helvetica Neue", Helvetica, Arial, "Segoe UI", Roboto, sans-serif;
+}
+* { box-sizing: border-box; }
+html, body { margin: 0; height: 100%; background: #000; color: #fff; font-family: var(--font); overflow: hidden; -webkit-user-select: none; user-select: none; -webkit-tap-highlight-color: transparent; }
+button { font: inherit; color: inherit; }
+img { -webkit-user-drag: none; }
+#stage { position: absolute; left: 50%; top: 50%; transform: translate(-50%, -50%) scale(var(--s, 1)); transform-origin: center center; overflow: hidden; }
+
+.copper { background: var(--copper) url(../assets/bg/copper.jpg) center / cover no-repeat; }
+.copper-portrait { background: var(--copper) url(../assets/bg/copper-portrait.jpg) center / cover no-repeat; }
+
+/* dot-matrix element */
+dot-text { display: inline-block; line-height: 0; }   /* pitch: --dot (px) on the element or any ancestor; else the font-size; else 12px */
+dot-text svg { display: block; }
+dot-text .tile { fill: var(--tile, #0b0908); }
+dot-text .on, dot-text .off { fill: var(--lit, #fff); }
+
+/* pill buttons from the deck */
+.pill { display: inline-flex; align-items: center; justify-content: center; height: 92px; padding: 0 46px; border: 2.5px solid rgba(255,255,255,.96); border-radius: 60px; background: rgba(255,255,255,.07); color: #fff; font-size: 34px; cursor: pointer; white-space: nowrap; box-shadow: 0 2px 10px rgba(60,20,10,.15), inset 0 1px 0 rgba(255,255,255,.18); transition: background .15s, color .15s, opacity .35s, transform .08s, box-shadow .3s; }
+.pill:active { transform: scale(.985); }
+.pill.solid { background: #fff; color: var(--copper-deep); font-weight: 700; }
+.pill.ghost { background: transparent; }
+.pill.small { height: 70px; padding: 0 36px; font-size: 26px; }
+.pill:disabled { cursor: default; }
+
+.eyebrow { margin: 0 0 22px; font-size: 22px; letter-spacing: .32em; text-transform: uppercase; opacity: .92; }
+h1 { margin: 0 0 36px; font-size: 64px; font-weight: 700; line-height: 1.08; text-shadow: 0 2px 14px rgba(60,20,10,.22); }
+h2 { margin: 34px 0 10px; font-size: 48px; font-weight: 700; }
+.sub { margin: 0; font-size: 28px; opacity: .94; }
+.fine { font-size: 22px; line-height: 1.45; opacity: .94; }
+
+.brand { position: absolute; left: 70px; right: 70px; bottom: 44px; display: flex; justify-content: space-between; align-items: center; pointer-events: none; }
+.brand .ub { height: 56px; }
+.wordmark { font-size: 28px; font-weight: 300; letter-spacing: .42em; text-indent: .42em; opacity: .96; }
+
+/* leaderboard flip-board */
+.board { width: 1000px; margin: 0 auto; padding: 34px 44px 28px; border-radius: 22px; background: linear-gradient(180deg, rgba(255,255,255,.16), rgba(0,0,0,.1)), var(--copper); box-shadow: 0 30px 60px rgba(60,20,10,.3), inset 0 1px 0 rgba(255,255,255,.4); --dot: 6.5px; }
+.board-head { display: flex; align-items: center; gap: 22px; font-size: 40px; font-weight: 700; letter-spacing: .06em; }
+.board-head .plane { width: 64px; height: 64px; padding: 10px; border-radius: 12px; background: #fff; color: var(--copper); }
+.board-cols { display: grid; grid-template-columns: 110px 1fr 180px; margin: 22px 20px 10px; font-size: 18px; letter-spacing: .22em; text-transform: uppercase; opacity: .92; }
+.board-cols span:nth-child(2) { text-align: center; }
+.board-cols span:last-child { text-align: right; }
+.lb-row { display: grid; grid-template-columns: 110px 1fr 180px; align-items: center; padding: 10px 20px; margin-bottom: 9px; border-radius: 9px; background: #0b0908; box-shadow: inset 0 2px 6px rgba(0,0,0,.6), 0 1px 0 rgba(255,255,255,.28); }
+.lb-row dot-text { --tile: transparent; }
+.lb-row dot-text:nth-child(2) { justify-self: center; }
+.lb-row dot-text:last-child { justify-self: end; }
+.lb-row.me { outline: 3px solid #fff; outline-offset: -3px; box-shadow: 0 0 26px rgba(255,255,255,.6); }
+.board-empty { margin: 30px 0 10px; text-align: center; font-size: 26px; opacity: .92; }
+
+/* operator + apply dialogs live in the top layer (viewport units, not the scaled stage) */
+dialog.dlg { border: 0; border-radius: 1.4vmin; padding: 3vmin 3.6vmin; width: min(94vw, 110vmin); max-height: 92vh; overflow: auto; background: #fbf7f2; color: #2a1a14; font-family: var(--font); font-size: 2.2vmin; box-shadow: 0 3vmin 8vmin rgba(0,0,0,.45); user-select: text; }
+dialog::backdrop { background: rgba(20,8,4,.62); }
+dialog.dlg h2 { margin: 0 0 1vmin; font-size: 3.4vmin; }
+dialog.dlg h3 { margin: 2.6vmin 0 1vmin; font-size: 1.9vmin; letter-spacing: .18em; text-transform: uppercase; opacity: .65; }
+dialog.dlg label { display: flex; align-items: center; gap: 1.4vmin; margin: 1.2vmin 0; }
+dialog.dlg input[type=number], dialog.dlg input[type=url] { flex: 1; font: inherit; padding: .8vmin 1.2vmin; border: 1px solid #c9b7a8; border-radius: .6vmin; background: #fff; color: inherit; }
+dialog.dlg input[type=number] { max-width: 12vmin; }
+dialog.dlg input[type=checkbox] { width: 2.4vmin; height: 2.4vmin; margin: 0; }
+dialog.dlg .actions { display: flex; flex-wrap: wrap; gap: 1vmin; margin: .6vmin 0; }
+dialog.dlg button { font: inherit; padding: 1.1vmin 2.2vmin; border: 1px solid var(--copper); border-radius: 4vmin; background: #fff; color: var(--copper-deep); cursor: pointer; }
+dialog.dlg button.primary { background: var(--copper); color: #fff; }
+dialog.dlg button.danger { border-color: #b33; color: #b33; }
+dialog.dlg .muted { opacity: .72; font-size: 1.9vmin; line-height: 1.5; }
+dialog.apply { text-align: center; }
+dialog.apply .apply-wrap { display: flex; flex-direction: column; align-items: center; gap: 2.2vmin; }
+#apply-body { display: flex; gap: 6vmin; justify-content: center; }
+.apply-col { display: flex; flex-direction: column; align-items: center; gap: 1.6vmin; }
+.apply-col .who { font-size: 2.4vmin; letter-spacing: .2em; text-transform: uppercase; }
+.apply-col .qr.big { width: 38vmin; height: 38vmin; padding: 1.4vmin; border-radius: 1.2vmin; background: #fff; box-shadow: 0 1vmin 3vmin rgba(0,0,0,.18); }
+.apply-col .qr.big svg { width: 100%; height: 100%; display: block; }
+.apply-col .code { --dot: auto; font-size: 1vmin; }   /* fs attribute on the element → pitch follows font-size */

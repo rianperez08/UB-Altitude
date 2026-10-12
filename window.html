@@ -1,0 +1,34 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+<title>Plane window — The Altitude Test</title>
+<link rel="icon" href="assets/brand/favicon.svg">
+<link rel="stylesheet" href="css/shared.css">
+<link rel="stylesheet" href="css/window.css">
+</head>
+<body>
+<div id="stage" class="window-stage">
+  <div class="cabin">
+    <div id="porthole" class="porthole">
+      <div class="glass">
+        <div class="sky"></div>
+        <img id="city" class="city" alt="">
+        <div class="clouds"></div>
+        <div class="glare"></div>
+        <div id="label" class="label" hidden><dot-text value=""></dot-text></div>
+      </div>
+      <div class="shade"><span class="handle"></span></div>
+    </div>
+    <div class="cabin-foot"><span id="chip" class="chip"></span><span class="wordmark">ALTITUDE</span></div>
+  </div>
+</div>
+<script src="js/config.js"></script>
+<script src="js/stage.js"></script>
+<script src="js/bus.js"></script>
+<script src="js/dotmatrix.js"></script>
+<script>fitStage(document.getElementById("stage"), 1080, 1920);</script>
+<script src="js/window.js"></script>
+</body>
+</html>

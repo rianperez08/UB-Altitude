@@ -1,0 +1,50 @@
+/* Plane-window display (window.html), designed at 1080×1920 and scaled to fit. */
+.window-stage { width: 1080px; height: 1920px; background: #efe7db; }
+body.embed { background: #efe7db; }
+.cabin { position: absolute; inset: 0; background: linear-gradient(180deg, #f3ede3 0%, #e7dfd2 60%, #d9cfbf 100%); }
+.cabin::before { content: ""; position: absolute; inset: 0; background: repeating-linear-gradient(180deg, rgba(255,255,255,.05) 0 2px, rgba(0,0,0,.015) 2px 5px); }
+.porthole { position: absolute; left: 140px; top: 330px; width: 800px; height: 1200px; border-radius: 330px; background: #d8cfc0; box-shadow: inset 0 0 0 24px #e9e2d6, inset 0 0 0 46px #c8bcaa, inset 0 0 0 52px #9d9081, 0 40px 80px rgba(0,0,0,.22), 0 2px 0 rgba(255,255,255,.7); }
+.glass { position: absolute; inset: 64px; border-radius: 268px; overflow: hidden; background: #7fb0dc; box-shadow: inset 0 0 70px rgba(0,0,0,.35); }
+.sky { position: absolute; inset: 0; background: linear-gradient(180deg, #4f8fcc 0%, #8fbde6 45%, #d7e8f4 80%, #f2f5f7 100%); }
+.city { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; opacity: 0; transition: opacity 1.4s ease; }
+.open .city { opacity: 1; }
+.city.kenburns { animation: kenburns 26s ease-out forwards; }
+@keyframes kenburns { from { transform: scale(1.14) translateY(2%); } to { transform: scale(1) translateY(0); } }
+.clouds { position: absolute; inset: -20%; opacity: 1; transition: opacity 1.8s ease .25s; animation: drift 46s ease-in-out infinite alternate; background:
+  radial-gradient(ellipse 38% 15% at 20% 28%, rgba(255,255,255,.96), rgba(255,255,255,0) 70%),
+  radial-gradient(ellipse 46% 17% at 72% 42%, rgba(255,255,255,.96), rgba(255,255,255,0) 70%),
+  radial-gradient(ellipse 52% 19% at 34% 62%, rgba(255,255,255,.92), rgba(255,255,255,0) 70%),
+  radial-gradient(ellipse 42% 15% at 82% 78%, rgba(255,255,255,.92), rgba(255,255,255,0) 70%),
+  radial-gradient(ellipse 64% 22% at 50% 96%, rgba(255,255,255,.97), rgba(255,255,255,0) 70%),
+  radial-gradient(ellipse 60% 24% at 50% 10%, rgba(255,255,255,.85), rgba(255,255,255,0) 70%); }
+.open .clouds { opacity: 0; }
+@keyframes drift { from { transform: translateX(-5%); } to { transform: translateX(5%); } }
+.glare { position: absolute; inset: 0; pointer-events: none; background: linear-gradient(112deg, rgba(255,255,255,.26) 0%, rgba(255,255,255,0) 32%, rgba(255,255,255,0) 68%, rgba(255,255,255,.14) 100%); }
+.label { position: absolute; left: 0; right: 0; bottom: 110px; display: flex; justify-content: center; --dot: 9px; filter: drop-shadow(0 8px 20px rgba(0,0,0,.55)); }
+.label[hidden] { display: none; }
+.shade { position: absolute; inset: 24px; border-radius: 310px; background: linear-gradient(180deg, #f1eadf, #ddd2c2); box-shadow: inset 0 -2px 0 rgba(255,255,255,.6), 0 10px 30px rgba(0,0,0,.25); transform: translateY(0); transition: transform 1.25s cubic-bezier(.65,0,.25,1); }
+.shade .handle { position: absolute; left: 50%; bottom: 60px; width: 160px; height: 18px; margin-left: -80px; border-radius: 9px; background: #b7a995; box-shadow: inset 0 2px 4px rgba(0,0,0,.25); }
+.open .shade { transform: translateY(-104%); }
+.cabin-foot { position: absolute; left: 0; right: 0; bottom: 120px; display: flex; flex-direction: column; align-items: center; gap: 28px; color: #6b4a3a; }
+.cabin-foot .chip { min-height: 60px; padding: 14px 34px; border-radius: 40px; background: rgba(255,255,255,.62); font-size: 24px; letter-spacing: .2em; text-transform: uppercase; }
+.cabin-foot .chip:empty { visibility: hidden; }
+.cabin-foot .wordmark { color: var(--copper-deep); }
+
+/* installation: the screen sits behind a real window cut-out — just the view, edge to edge */
+body.noframe .window-stage, body.noframe { background: #000; }
+body.noframe .cabin { background: #000; }
+body.noframe .cabin::before { display: none; }
+body.noframe .porthole { left: 0; top: 0; width: 1080px; height: 1920px; border-radius: 0; box-shadow: none; background: #000; }
+body.noframe .glass { inset: 0; border-radius: 0; box-shadow: none; }
+body.noframe .shade, body.noframe .cabin-foot { display: none; }
+body.noframe .label { bottom: 150px; --dot: 11px; }
+
+/* embedded preview inside the IFE page */
+body.embed .cabin { background: transparent; }
+body.embed .cabin::before { display: none; }
+body.embed .porthole { left: 90px; top: 160px; width: 900px; height: 1400px; border-radius: 380px; }
+body.embed .glass { border-radius: 320px; }
+body.embed .shade { border-radius: 360px; }
+body.embed .cabin-foot { bottom: 80px; }
+body.embed .cabin-foot .wordmark { display: none; }
+body.embed .cabin-foot .chip { font-size: 34px; }

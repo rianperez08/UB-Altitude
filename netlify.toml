@@ -1,0 +1,9 @@
+# Static deploy (the game runs fully in the browser). Screens on one browser profile stay in sync
+# through BroadcastChannel; for separate kiosk windows / PCs run server.js on the venue PC instead.
+[build]
+  publish = "."
+
+[[headers]]
+  for = "/*"
+  [headers.values]
+    Cache-Control = "no-cache"

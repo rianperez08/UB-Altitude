@@ -1,0 +1,8 @@
+/* Standalone leaderboard (leaderboard.html): portrait 1080×1920 or landscape 1920×1080. */
+.lb-stage { display: flex; align-items: center; justify-content: center; }
+.lb-stage.portrait .board { width: 1000px; --dot: 6.5px; }
+.lb-stage.portrait .lb-row { padding: 12px 22px; margin-bottom: 12px; }
+.lb-stage.portrait .brand { left: 60px; right: 60px; bottom: 60px; }
+.lb-stage.landscape .board { width: 1060px; padding: 26px 44px 18px; --dot: 5.8px; }
+.lb-stage.landscape .lb-row { padding: 8px 20px; margin-bottom: 8px; }
+.lb-stage.landscape .board-head { font-size: 36px; }

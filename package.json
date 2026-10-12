@@ -1,0 +1,11 @@
+{
+  "name": "ub-altitude",
+  "version": "1.0.0",
+  "description": "The Altitude Test — UnionBank Altitude card activation game (IFE screen, plane-window display, leaderboard)",
+  "private": true,
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js"
+  },
+  "license": "UNLICENSED"
+}

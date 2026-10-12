@@ -1,0 +1,67 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+<title>The Altitude Test — UnionBank Altitude</title>
+<link rel="icon" href="assets/brand/favicon.svg">
+<link rel="stylesheet" href="css/shared.css">
+<link rel="stylesheet" href="css/ife.css">
+</head>
+<body>
+<div id="stage" class="ife-stage">
+  <div id="screen"></div>
+  <aside id="porthole" hidden>
+    <div class="porthole-frame"><iframe title="Plane window preview"></iframe></div>
+    <span class="porthole-cap">Your window</span>
+  </aside>
+</div>
+
+<dialog id="settings" class="dlg">
+  <form method="dialog" onsubmit="return false">
+    <h2>Operator settings</h2>
+    <p id="set-stats" class="muted"></p>
+    <label>Seconds per landing <input id="set-round" type="number" min="5" max="60"></label>
+    <label><input id="set-preview" type="checkbox"> Show the plane-window preview beside this screen (single-screen setups and testing)</label>
+    <label><input id="set-sound" type="checkbox"> Sound</label>
+    <label>Apply link (QR code) <input id="set-url" type="url" placeholder="https://…"></label>
+    <div class="actions"><button type="button" data-set="save" class="primary">Save</button><button type="button" data-set="close">Close</button></div>
+    <h3>Screens</h3>
+    <div class="actions">
+      <button type="button" data-set="window">Open window · seat 1</button>
+      <button type="button" data-set="seat2">Open IFE · seat 2</button>
+      <button type="button" data-set="window2">Open window · seat 2</button>
+      <button type="button" data-set="board">Open leaderboard</button>
+    </div>
+    <h3>Data</h3>
+    <div class="actions">
+      <button type="button" data-set="csv">Export flights (CSV)</button>
+      <button type="button" data-set="seed">Seed demo leaderboard</button>
+      <button type="button" data-set="clear" class="danger">Clear leaderboard</button>
+      <button type="button" data-set="reset">Back to attract screen</button>
+    </div>
+    <p class="muted">Shortcuts: <b>S</b> this panel · <b>Esc</b> attract screen · <b>Enter</b> next · <b>1–4</b> seat 1 answers · <b>7 8 9 0</b> seat 2 answers · on a touch screen tap the top-left corner five times.</p>
+  </form>
+</dialog>
+
+<dialog id="apply" class="dlg apply">
+  <div class="apply-wrap">
+    <h2>Scan to apply for your UnionBank Altitude card</h2>
+    <div id="apply-body"></div>
+    <p class="muted">Keep your referral code — your UB Miles are credited once your card is approved.</p>
+    <button type="button" data-close class="primary">Done</button>
+  </div>
+</dialog>
+
+<script src="js/config.js"></script>
+<script src="js/stage.js"></script>
+<script src="js/bus.js"></script>
+<script src="js/store.js"></script>
+<script src="js/sfx.js"></script>
+<script src="js/dotmatrix.js"></script>
+<script src="js/leaderboard-view.js"></script>
+<script src="vendor/qrcode.js"></script>
+<script>fitStage(document.getElementById("stage"), 1920, 1080);</script>
+<script src="js/game.js"></script>
+</body>
+</html>
