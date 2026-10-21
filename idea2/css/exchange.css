@@ -1,0 +1,145 @@
+/* Altitude Exchange (idea2/index.html) — portrait kiosk, designed at 1080×1414 after the deck's mock-up and scaled to fit.
+ * Builds on css/shared.css (dot-matrix text, dialogs). White screen panel above a copper coin tray. */
+html, body { background: #f8f6f5; color: #3a2218; }
+.x-stage { width: 1080px; height: 1414px; background: linear-gradient(180deg, #fefefe 0%, #fbfafa 55%, #f7f3f2 100%); }
+[hidden] { display: none !important; }
+button { cursor: pointer; }
+
+/* copper type */
+.cu { background: linear-gradient(100deg, #d8896a 0%, #f2bea4 48%, #dc8f70 100%); -webkit-background-clip: text; background-clip: text; color: transparent; }
+.heading { position: absolute; left: 0; right: 0; top: 112px; margin: 0; text-align: center; font-size: 46px; font-weight: 400; letter-spacing: .015em;
+  background: linear-gradient(90deg, #8c3a20, #b9613f 55%, #93432a); -webkit-background-clip: text; background-clip: text; color: transparent; }
+
+/* the screen panel */
+.panel { position: absolute; left: 120px; top: 245px; width: 840px; height: 625px; box-sizing: border-box; display: flex; flex-direction: column; align-items: center; justify-content: center;
+  border: 2px solid #f6eeea; border-radius: 58px; background: #fff; box-shadow: 0 28px 60px rgba(150,80,50,.09), 0 2px 8px rgba(150,80,50,.05); text-align: center; }
+.panel.framed { border: 3px solid transparent;
+  background: linear-gradient(#fff, #fff) padding-box, linear-gradient(150deg, #f8e0d4 0%, #d9926f 28%, #f6d3c3 52%, #c97b5a 78%, #f3cbb8 100%) border-box;
+  box-shadow: 0 30px 60px rgba(150,80,50,.15), 0 0 0 7px rgba(255,255,255,.75), 0 0 44px rgba(226,150,118,.28); }
+.panel .wordmark { width: 754px; height: auto; margin-top: 18px; }
+.ring-btn { display: inline-flex; align-items: center; justify-content: center; min-width: 410px; height: 104px; padding: 0 50px; margin-top: 64px; border: 3px solid #e7a184; border-radius: 52px; background: #fff; font-size: 56px; font-weight: 300; line-height: 1; transition: transform .08s, box-shadow .2s; }
+.ring-btn:active { transform: scale(.97); box-shadow: 0 0 0 10px rgba(231,161,132,.18); }
+.start .ring-btn { animation: breathe 2.6s ease-in-out infinite; }
+@keyframes breathe { 0%, 100% { box-shadow: 0 0 0 0 rgba(231,161,132,.35); } 50% { box-shadow: 0 0 0 16px rgba(231,161,132,0); } }
+.hint { margin: 28px 60px 0; font-size: 22px; line-height: 1.4; color: #c4896f; }
+.hint.nudge, .sources.nudge { animation: nudge .5s ease 2; }
+@keyframes nudge { 25% { transform: translateX(-10px); } 75% { transform: translateX(10px); } }
+
+.big { margin: 0; font-size: 82px; font-weight: 300; line-height: 1.2; }
+.big.two { font-size: 74px; line-height: 1.22; margin-top: -30px; }
+.big.small { font-size: 62px; }
+.progress { width: 644px; height: 7px; margin-top: 46px; border-radius: 4px; background: #f7e7df; overflow: hidden; }
+.progress i { display: block; width: 40%; height: 100%; border-radius: 4px; background: linear-gradient(90deg, #f3c7b2, #d98a69); animation: progress 1.5s ease-in-out infinite; }
+@keyframes progress { from { transform: translateX(-100%); } to { transform: translateX(250%); } }
+.spin { width: 200px; height: 200px; margin-top: 50px; animation: spin 1.8s linear infinite; }
+@keyframes spin { to { transform: rotate(360deg); } }
+.msg { margin: 26px 70px 0; font-size: 28px; line-height: 1.4; color: #9b5a40; }
+.detail { font-size: 17px; margin-top: 14px; }
+.error .ring-btn { margin-top: 44px; }
+
+/* dot-matrix boards */
+.bar { display: flex; align-items: center; box-sizing: border-box; border-radius: 10px; background: #050404; }
+.bar dot-text { --tile: transparent; }
+.rows { list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; gap: var(--gap); }
+.rows li { display: flex; gap: 33px; height: var(--row); opacity: 0; transform: translateY(8px); transition: opacity .25s, transform .25s; }
+.rows li.in { opacity: 1; transform: none; }
+.rows .num { width: 73px; justify-content: center; }
+.rows .name { width: 591px; padding: 0 22px; }
+.rows.cur li { gap: 29px; }
+.rows .code { width: 303px; justify-content: center; }
+.rows .val { width: 408px; padding: 0 18px; justify-content: space-between; }
+.rows .val.note { justify-content: center; }
+.bar.screen { width: 640px; height: 214px; justify-content: center; border-radius: 14px; }
+.title { margin: 0 0 26px; font-size: 48px; font-weight: 400; letter-spacing: .01em; }
+.fx { display: flex; gap: 8px; margin-top: 24px; }
+.fx-box { position: relative; width: 314px; height: 85px; box-sizing: border-box; border-radius: 10px; text-align: right; padding: 26px 14px 0 0; }
+.fx-box span { position: absolute; left: 13px; top: 10px; font-size: 14px; letter-spacing: .02em; }
+.fx-box b { font-size: 44px; font-weight: 300; line-height: 1; }
+.fx-box.alt { background: linear-gradient(90deg, #e59d80, #f5d4c4); box-shadow: inset 0 1px 0 rgba(255,255,255,.5); }
+.fx-box.alt span { color: #fff6f1; }
+.fx-box.alt b { color: #a2523a; }
+.fx-box.other { border: 2px solid #e6ac94; background: #fff; }
+.fx-box.other span, .fx-box.other b { color: #c37b5e; }
+.fx-cap { display: flex; gap: 8px; margin-top: 12px; font-size: 16px; letter-spacing: .02em; color: #c27f63; }
+.fx-cap span { width: 314px; }
+.fx-cap.one { margin-top: 14px; }
+.redeem { width: 312px; height: 84px; margin-top: 24px; border: 0; border-radius: 12px; background: linear-gradient(90deg, #efbba3, #f8dccf 50%, #ebb39a); box-shadow: 0 8px 20px rgba(200,120,90,.25), inset 0 1px 0 rgba(255,255,255,.7); font-size: 46px; font-weight: 300; color: #9b4b2e; animation: breathe 2.6s ease-in-out infinite; }
+.redeem:active { transform: scale(.97); }
+
+/* the copper tray and what the camera sees in it */
+.tray { position: absolute; left: 124px; top: 916px; width: 851px; height: 445px; }
+.tray-art { position: absolute; inset: 0; width: 100%; height: 100%; }
+.tray-floor { position: absolute; left: 75px; top: 59px; width: 689px; height: 295px; border-radius: 6px; overflow: hidden; }
+.tray-floor video, #still { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; }
+.tray-floor:not([data-source="camera"]) video { visibility: hidden; }
+.floor-shade { position: absolute; inset: 0; pointer-events: none; background: linear-gradient(180deg, rgba(236,176,150,.16), rgba(236,176,150,.06));
+  box-shadow: inset 0 12px 24px rgba(90,40,20,.45), inset 0 -6px 14px rgba(90,40,20,.28), inset 0 0 0 2px rgba(130,64,38,.35); }
+.tray-floor[data-source="none"] .floor-shade { display: none; }
+.beam { position: absolute; left: -4%; right: -4%; top: 58%; height: 4px; pointer-events: none; opacity: 0; transition: opacity .3s;
+  background: linear-gradient(90deg, transparent, #fff3ec 18%, #fff 50%, #fff3ec 82%, transparent);
+  box-shadow: 0 0 16px 5px rgba(255,196,168,.8), 0 0 60px 18px rgba(255,170,130,.38); }
+.scanning .beam { opacity: 1; animation: sweep 1.5s ease-in-out infinite alternate; }
+@keyframes sweep { from { top: 6%; } to { top: 92%; } }
+.floor-msg { position: absolute; left: 50%; top: 50%; margin: 0; padding: 10px 24px; transform: translate(-50%, -50%); border-radius: 26px; background: rgba(255,255,255,.82); color: #9b5a40; font-size: 21px; white-space: nowrap; }
+.floor-msg:empty { display: none; }
+.sources { position: absolute; left: 0; right: 0; top: 1364px; display: flex; justify-content: center; gap: 10px; }
+.sources button { padding: 6px 18px; border: 1.5px solid #ecc9b9; border-radius: 22px; background: rgba(255,255,255,.8); color: #b9765b; font: inherit; font-size: 18px; }
+.sources button.on { border-color: #d98a69; background: #fff; color: #9b4b2e; font-weight: 700; }
+.sources [data-src="camera"].on span::before { content: ""; display: inline-block; width: 9px; height: 9px; margin-right: 8px; border-radius: 50%; background: #d6452d; vertical-align: 1px; animation: blink 1.6s step-end infinite; }
+@keyframes blink { 50% { opacity: .2; } }
+body:not([data-phase="start"]):not([data-phase="error"]) .sources { visibility: hidden; }
+
+/* receipt: the kiosk's copper printer */
+.printer { position: absolute; inset: 0; display: none; overflow: hidden; background: #b86d4e url(../../assets/bg/copper-portrait.jpg) center / cover; }
+.printer::before { content: ""; position: absolute; inset: 0; background: radial-gradient(120% 80% at 50% 30%, rgba(255,220,200,.18), rgba(70,25,10,.35)); }
+.printing .printer { display: block; }
+.printing .panel, .printing .tray, .printing .sources, .printing .heading { display: none !important; }
+.bay { position: absolute; left: 110px; top: 170px; width: 860px; height: 860px; border-radius: 84px;
+  background: linear-gradient(180deg, rgba(110,45,22,.38), rgba(255,215,195,.08) 60%, rgba(255,225,205,.16));
+  box-shadow: inset 0 28px 44px rgba(70,24,8,.55), inset 0 -10px 22px rgba(255,222,204,.35), 0 2px 0 rgba(255,236,224,.55), 0 -2px 0 rgba(90,30,12,.25); }
+.slot { position: absolute; left: 170px; right: 170px; top: 58px; height: 46px; border-radius: 23px; background: linear-gradient(180deg, #0b0504, #2c1812); box-shadow: inset 0 7px 12px rgba(0,0,0,.85), 0 2px 0 rgba(255,222,204,.45); }
+.oval { position: absolute; right: 40px; top: 130px; width: 112px; height: 42px; border-radius: 21px; background: linear-gradient(180deg, rgba(90,32,14,.5), rgba(255,220,200,.25)); box-shadow: inset 0 6px 10px rgba(60,20,8,.6), 0 2px 0 rgba(255,232,220,.5); }
+.paper-wrap { position: absolute; left: 305px; width: 470px; top: 251px; bottom: 0; overflow: hidden; }
+.paper { box-sizing: border-box; min-height: 100%; padding: 92px 38px 60px; text-align: center; background: linear-gradient(180deg, #e9dfd8 0, #f7f1ec 70px, #fffdfb 220px);
+  box-shadow: 0 18px 40px rgba(60,20,10,.4); transform: translateY(-100%); animation: feed 2.8s steps(30, end) .2s forwards; }
+@keyframes feed { to { transform: translateY(0); } }
+.p-label { margin: 0 0 14px; font-size: 30px; color: #8a6a5c; }
+.p-miles, .p-unit { margin: 0; font-weight: 800; line-height: 1; letter-spacing: -.02em; background: linear-gradient(180deg, #eaa385 0%, #b65f3c 55%, #d88a68 100%); -webkit-background-clip: text; background-clip: text; color: transparent; }
+.p-miles { font-size: 148px; }
+.p-unit { margin: 8px 0 34px; font-size: 62px; }
+.paper hr { margin: 0 6px 34px; border: 0; border-top: 2px solid rgba(170,120,100,.25); }
+.p-code-label { margin: 0 0 10px; font-size: 25px; letter-spacing: .14em; color: #8a5a46; }
+.p-code { margin: 0 0 34px; font-size: 40px; letter-spacing: .14em; color: #8a4a30; }
+.p-cta { margin: 0 0 14px; font-size: 34px; font-weight: 700; line-height: 1.35; color: #8a4a30; }
+.paper .qr { width: 150px; height: 150px; margin: 0 auto 22px; }
+.paper .qr svg { display: block; width: 100%; height: 100%; }
+.p-note { margin: 0; font-size: 22px; line-height: 1.45; color: #8a6a5c; }
+.ring-btn.light { position: absolute; right: 58px; bottom: 70px; z-index: 2; margin: 0; min-width: 190px; height: 78px; padding: 0 34px; border-color: rgba(255,240,232,.9); background: rgba(255,255,255,.14); color: #fff8f4; font-size: 38px; }
+
+dialog.dlg input[type=text], dialog.dlg select { flex: 1; font: inherit; padding: .8vmin 1.2vmin; border: 1px solid #c9b7a8; border-radius: .6vmin; background: #fff; color: inherit; }
+
+/* paper slip for an 80 mm receipt printer */
+#print-area { display: none; }
+@media print {
+  @page { margin: 3mm; }
+  html, body { height: auto; overflow: visible; background: #fff; color: #000; }
+  #stage, dialog { display: none !important; }
+  #print-area { display: block; width: 72mm; margin: 0 auto; font: 10pt/1.35 "Helvetica Neue", Arial, sans-serif; }
+  .slip { text-align: center; }
+  .slip .s-head { margin: 0; font-size: 13pt; font-weight: 700; letter-spacing: .12em; }
+  .slip .s-sub { margin: 1mm 0 3mm; font-size: 8pt; }
+  .slip table { width: 100%; border-collapse: collapse; font-size: 9pt; text-align: left; }
+  .slip td + td { text-align: right; }
+  .slip .s-row { display: flex; justify-content: space-between; margin: 1mm 0; font-size: 9pt; }
+  .slip .p-label { margin: 4mm 0 1mm; font-size: 10pt; color: #000; }
+  .slip .p-miles, .slip .p-unit { background: none; color: #000; }
+  .slip .p-miles { font-size: 30pt; }
+  .slip .p-unit { margin: 0 0 3mm; font-size: 14pt; }
+  .slip hr { margin: 0 0 3mm; border: 0; border-top: 1px dashed #000; }
+  .slip .p-code-label { margin: 0; font-size: 8pt; color: #000; }
+  .slip .p-code { margin: 1mm 0 3mm; font-size: 14pt; color: #000; }
+  .slip .p-cta { margin: 0 0 2mm; font-size: 9pt; color: #000; }
+  .slip .qr { width: 30mm; height: 30mm; margin: 0 auto 2mm; }
+  .slip .qr svg { width: 100%; height: 100%; }
+  .slip .p-note { margin: 1mm 0 0; font-size: 7.5pt; color: #000; }
+}

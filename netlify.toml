@@ -7,3 +7,8 @@
   for = "/*"
   [headers.values]
     Cache-Control = "no-cache"
+
+# Altitude Exchange coin analyzer: netlify/functions/analyze-coins.mjs → /api/analyze-coins
+# (needs GEMINI_API_KEY in the project's environment variables, Functions scope).
+[functions]
+  node_bundler = "esbuild"

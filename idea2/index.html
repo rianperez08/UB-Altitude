@@ -1,0 +1,68 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+<title>Altitude Exchange — UnionBank Altitude</title>
+<script>/* relative paths below need the trailing slash: /idea2 → /idea2/ */ if (!/(\/|\.html)$/.test(location.pathname)) location.replace(location.pathname + "/" + location.search + location.hash);</script>
+<link rel="icon" href="../assets/brand/favicon.svg">
+<link rel="stylesheet" href="../css/shared.css">
+<link rel="stylesheet" href="css/exchange.css">
+</head>
+<body>
+<div id="stage" class="x-stage">
+  <h2 id="heading" class="heading" hidden></h2>
+  <section id="panel" class="panel" aria-live="polite"></section>
+  <div class="tray">
+    <img class="tray-art" src="assets/tray.png" alt="">
+    <div class="tray-floor" id="floor" data-source="none">
+      <video id="cam" muted playsinline autoplay></video>
+      <img id="still" alt="Coins in the tray" hidden>
+      <i class="floor-shade"></i><i class="beam"></i>
+      <p class="floor-msg" id="floor-msg"></p>
+    </div>
+  </div>
+  <nav class="sources" id="sources" aria-label="What the coin analyzer looks at">
+    <button data-src="camera"><span id="cam-status">Camera</span></button>
+    <button data-src="photo">Use a photo</button>
+    <button data-src="sample">Sample tray</button>
+  </nav>
+  <div id="printer" class="printer"></div>
+</div>
+<input type="file" id="photo-input" accept="image/*" hidden>
+<div id="print-area" aria-hidden="true"></div>
+
+<dialog id="settings" class="dlg">
+  <form method="dialog" onsubmit="return false">
+    <h2>Operator settings</h2>
+    <p id="set-stats" class="muted"></p>
+    <label>Tray camera <select id="set-camera"></select></label>
+    <label>Kiosk location (printed on receipts) <input id="set-location" type="text"></label>
+    <label>Apply link (QR code) <input id="set-url" type="url" placeholder="https://…"></label>
+    <label><input id="set-sound" type="checkbox"> Sound</label>
+    <label><input id="set-print" type="checkbox"> Print a paper receipt automatically (receipt printer; start Chrome with --kiosk-printing to skip the print dialog)</label>
+    <div class="actions"><button type="button" data-set="save" class="primary">Save</button><button type="button" data-set="close">Close</button></div>
+    <h3>Coin analyzer</h3>
+    <div class="actions"><button type="button" data-set="test">Test with the sample tray</button></div>
+    <p id="set-test-out" class="muted"></p>
+    <h3>Data</h3>
+    <div class="actions">
+      <button type="button" data-set="csv">Export exchanges (CSV)</button>
+      <button type="button" data-set="clear" class="danger">Clear records</button>
+      <button type="button" data-set="reset">Back to start screen</button>
+    </div>
+    <p class="muted">Shortcuts: <b>S</b> this panel · <b>Esc</b> start screen · <b>Enter</b> start / next · on a touch screen tap the top-left corner five times. Rates and fees are in <code>idea2/js/config.js</code>; each scan is one call to the coin analyzer.</p>
+  </form>
+</dialog>
+
+<script src="js/config.js"></script>
+<script src="../js/stage.js"></script>
+<script src="js/store.js"></script>
+<script src="../js/sfx.js"></script>
+<script src="../js/dotmatrix.js"></script>
+<script src="../vendor/qrcode.js"></script>
+<script>fitStage(document.getElementById("stage"), 1080, 1414);</script>
+<script src="js/tray.js"></script>
+<script src="js/exchange.js"></script>
+</body>
+</html>

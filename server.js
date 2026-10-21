@@ -8,7 +8,8 @@
  * even across separate Chrome kiosk windows or other PCs on the LAN:
  *   GET  /events   Server-Sent Events stream; every message POSTed to /bus is fanned out here.
  *   POST /bus      JSON message from a screen (see js/bus.js).
- * The last game state and leaderboard are replayed to screens that connect late. */
+ * The last game state and leaderboard are replayed to screens that connect late.
+ *   POST /api/analyze-coins   Altitude Exchange (/idea2/) coin analyzer — needs `npm install` and GEMINI_API_KEY. */
 "use strict";
 const http = require("http");
 const fs = require("fs");
@@ -59,6 +60,26 @@ const server = http.createServer((req, res) => {
     return;
   }
 
+  if (url.pathname === "/api/analyze-coins" && req.method === "POST") {
+    const reply = (status, obj) => { res.writeHead(status, { "Content-Type": "application/json; charset=utf-8" }); res.end(JSON.stringify(obj)); };
+    let body = "";
+    req.on("data", c => { body += c; if (body.length > 8e6) { reply(413, { code: "too_large", error: "The image is too large." }); req.destroy(); } });
+    req.on("end", async () => {
+      let mod;
+      try { mod = await import("./lib/coin-analyzer.mjs"); }
+      catch (e) { return reply(503, { code: "not_configured", error: "Run `npm install` to set up the coin analyzer." }); }
+      try {
+        const { image, mediaType } = JSON.parse(body || "{}");
+        reply(200, await mod.analyzeCoins({ image, mediaType, apiKey: process.env.GEMINI_API_KEY || process.env.GOOGLE_API_KEY }));
+      } catch (e) {
+        if (e instanceof mod.AnalyzerError) return reply(e.status, { code: e.code, error: e.message });
+        console.error(e);
+        reply(500, { code: "error", error: "The coin analyzer failed." });
+      }
+    });
+    return;
+  }
+
   if (url.pathname === "/health") { res.writeHead(200, { "Content-Type": "application/json" }); return res.end(JSON.stringify({ ok: true, screens: clients.size })); }
 
   let p;
@@ -67,6 +88,7 @@ const server = http.createServer((req, res) => {
   const file = path.normalize(path.join(ROOT, p));
   if (!file.startsWith(ROOT + path.sep) && file !== ROOT) { res.writeHead(403); return res.end(); }
   fs.stat(file, (err, st) => {
+    if (!err && st.isDirectory()) { res.writeHead(301, { Location: url.pathname + "/" + url.search }); return res.end(); }   // /idea2 → /idea2/
     if (err || !st.isFile()) { res.writeHead(404, { "Content-Type": "text/plain" }); return res.end("Not found"); }
     res.writeHead(200, { "Content-Type": MIME[path.extname(file).toLowerCase()] || "application/octet-stream", "Content-Length": st.size, "Cache-Control": "no-cache" });
     fs.createReadStream(file).pipe(res);

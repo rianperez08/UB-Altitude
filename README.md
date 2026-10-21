@@ -81,7 +81,7 @@ times to open the operator panel.
 ## 3. Running it
 
 ```bash
-npm start            # → http://localhost:8080/   (no dependencies to install)
+npm start            # → http://localhost:8080/   (The Altitude Test needs no install; `npm install` once for the Idea 2 coin analyzer)
 ```
 
 The server prints its LAN address. Open the pages above on the venue screens. It also serves two
@@ -170,6 +170,9 @@ assets/brand/       The Altitude Test badge, UnionBank logo (keyed out of the de
 vendor/qrcode.js    QR generator (MIT, Kazuhiko Arase)
 server.js           static server + sync relay (zero dependencies)
 kiosk/              Chrome kiosk launchers
+idea2/              Idea 2 — Altitude Exchange, the coin-to-miles kiosk (see section 7)
+lib/coin-analyzer.mjs  Altitude Exchange coin analyzer (Gemini vision)
+netlify/functions/  /api/analyze-coins on Netlify
 docs/deck/          page renders of the source deck for reference
 netlify.toml        static deploy config
 ```
@@ -193,3 +196,59 @@ artwork is supplied.
   `assets/bg/copper.jpg`.
 - **Dot-matrix text** — `<dot-text value="…">` anywhere; `tiles` for one tile per glyph,
   `--dot` sets the pitch.
+
+---
+
+## 7. Idea 2 — Altitude Exchange (`/idea2/`)
+
+The second idea in the deck: a kiosk that turns the foreign coins left over from your trips into
+UB Miles. Money changers don't take foreign coins; Altitude Exchange does. The screens follow the
+**"IDEA 2"** UI deck: a portrait kiosk (`idea2/index.html`, designed at 1080×1414 and scaled to
+fit) with a white screen panel above a copper coin tray. Live at https://ub-altitude.netlify.app/idea2/.
+
+| Screen | What happens |
+| --- | --- |
+| start | *Altitude Exchange* wordmark, **start**. The tray shows the live camera looking at the coins. |
+| Scanning | The kiosk photographs the tray and sends it to the **coin analyzer**; the scanner light sweeps the tray. |
+| Detecting coins from… | One dot-matrix row per issuing country the analyzer found. |
+| Currencies detected | One row per currency: total face value `=` pesos (`$0.25 = ₱14.50`). Philippine pesos, unrecognised coins and currencies without a rate are listed but not valued. |
+| Total coin value | `₱ 413.00`, then **UB ALTITUDE 1.25%** vs **OTHER CONVERSION 1.75%**, each with "total with FX cost". |
+| Converting into Altitude miles | Spinner. |
+| Your total miles | Total ÷ ₱16, to two decimals (₱413 → 25.81), **Redeem**. |
+| Receipt | The copper printer issues the receipt: UB Miles earned and **Keep your UB Miles** — guests show it at the UnionBank booth to exchange their miles for giveaway items (they applied for the card at the start, so there is no code or apply QR). **done** → start. |
+
+The board screens move on by themselves; tapping the panel skips ahead.
+
+### The coin analyzer
+
+`lib/coin-analyzer.mjs` sends the photo of the tray to Gemini (`gemini-3.8-flash` through the official
+`@google/genai` SDK: vision, structured JSON output, high image resolution, nothing stored on Google's
+side) and gets back every coin: issuing country, ISO currency, face value, label, confidence. The
+kiosk then values the coins with the rates in `idea2/js/config.js` — the model never sets a price.
+
+- **Netlify:** `netlify/functions/analyze-coins.mjs` serves it at `POST /api/analyze-coins`. Add the
+  Gemini API key to the project — **Project configuration → Environment variables → `GEMINI_API_KEY`**
+  (scope: Functions) — then redeploy. Until then the kiosk shows "Coin analyzer offline". The function
+  is rate-limited to 12 scans a minute per visitor.
+- **Venue PC:** `npm install` once, then `GEMINI_API_KEY=… npm start`; `server.js` serves the same route.
+- Each **start** is one API call. The operator panel's **Test with the sample tray** checks the key,
+  the connection and the time a scan takes.
+
+### What the analyzer looks at
+
+The kiosk asks for the camera when it opens (the rear camera on phones and tablets; pick another in
+the operator panel). Only the part of the frame drawn inside the tray is sent. Without a camera, the
+buttons under the tray switch to **Use a photo** (phones offer their camera) or **Sample tray** (the
+coins from the deck) — both go through the same analyzer. The camera needs https or localhost.
+
+- **Rates, fees, miles, timing** — `idea2/js/config.js`. The rates are indicative demo rates; set real
+  ones before the event.
+- **Operator panel** — **S** (or five taps top-left): tray camera, kiosk location (printed on paper
+  receipts), sound, automatic paper receipts, analyzer test, CSV export of every exchange
+  (`exchange.scans` in `localStorage`), clear records. **Esc** start screen · **Enter** start / next.
+- **Receipt printer** — tick *Print a paper receipt automatically* and start Chrome with
+  `--kiosk-printing` so the 80 mm slip prints without a dialog.
+- Code: `idea2/js/exchange.js` (flow and screens), `idea2/js/tray.js` (camera, photo, sample,
+  capture), `idea2/js/store.js` (log, settings, codes), `idea2/css/exchange.css`; artwork cut from the
+  deck in `idea2/assets/` (wordmark, empty tray, sample tray). Shared with the root: dot-matrix text
+  (now with `$ € £ ¥ ₩ ₱ = %`), sounds, QR generator.

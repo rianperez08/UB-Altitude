@@ -1,11 +1,14 @@
 {
   "name": "ub-altitude",
   "version": "1.0.0",
-  "description": "The Altitude Test — UnionBank Altitude card activation game (IFE screen, plane-window display, leaderboard)",
+  "description": "UnionBank Altitude activations: The Altitude Test (IFE game, plane window, leaderboard) and Altitude Exchange (coin-to-miles kiosk, /idea2/)",
   "private": true,
   "main": "server.js",
   "scripts": {
     "start": "node server.js"
   },
-  "license": "UNLICENSED"
+  "license": "UNLICENSED",
+  "dependencies": {
+    "@google/genai": "2.25.0"
+  }
 }
