@@ -107,13 +107,19 @@ body.duo .bar { --dot: 11px; }
 /* claim */
 .claim .col { width: 640px; gap: 14px; }
 .claim .eyebrow { margin-bottom: 8px; }
-.card-art { position: relative; width: 300px; height: 190px; border-radius: 18px; overflow: hidden; background: linear-gradient(135deg, #d99f82, #a95a3f 55%, #7f3a24); box-shadow: 0 22px 44px rgba(60,20,10,.4), inset 0 1px 0 rgba(255,255,255,.45); }
-.card-art::before { content: ""; position: absolute; inset: 0; background: url(../assets/bg/copper.jpg) center / cover; opacity: .5; mix-blend-mode: luminosity; }
-.card-art .card-ub { position: absolute; left: 20px; top: 18px; height: 30px; }
-.card-art .chip { position: absolute; left: 22px; top: 78px; width: 50px; height: 38px; border-radius: 8px; background: linear-gradient(135deg, #f6e3c4, #c9a06a); }
-.card-art .card-name { position: absolute; right: 20px; bottom: 18px; font-size: 18px; font-weight: 300; letter-spacing: .42em; text-indent: .42em; }
-.claim .label { margin: 10px 0 0; font-size: 22px; letter-spacing: .28em; text-transform: uppercase; }
+.claim-card { display: flex; align-items: center; gap: 44px; }
+.card-art { display: block; width: 280px; height: auto; transform: rotate(-4deg); filter: drop-shadow(0 26px 30px rgba(60,20,10,.45)); }   /* the rose-gold card, portrait */
+.claim-code { display: flex; flex-direction: column; align-items: center; gap: 14px; }
+.claim .label { margin: 0; font-size: 22px; letter-spacing: .28em; text-transform: uppercase; }
 .code { --dot: 9px; }
+.claim-code .code { --dot: 6px; }
+body.duo .claim .col { width: auto; }
+body.duo .claim-card { gap: 30px; }
+body.duo .card-art { width: 190px; }
+body.duo .claim-code .code { --dot: 5px; }
+body.duo .claim-code .qr { width: 160px; height: 160px; }
+body.duo .claim .eyebrow { font-size: 18px; letter-spacing: .2em; white-space: nowrap; }
+body.duo .claim .label { font-size: 17px; letter-spacing: .2em; white-space: nowrap; }
 .qr { width: 184px; height: 184px; padding: 10px; border-radius: 14px; background: #fff; box-shadow: 0 10px 30px rgba(60,20,10,.3); }
 .qr svg { width: 100%; height: 100%; display: block; }
 .claim .fine { margin: 12px 0 22px; }

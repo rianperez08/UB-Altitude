@@ -187,6 +187,7 @@
     plane: '<svg class="plane-big" viewBox="0 0 64 64" aria-hidden="true"><path fill="currentColor" d="M8 40l6-3 14 4 6-16-5-7 5-2 9 8 13 4c3 1 4 3 3 5s-4 3-7 2l-9-2-13 10 2 10-5 1-4-9-9-2-6 3z"/></svg>',
     porthole: '<svg class="ico" viewBox="0 0 24 24" aria-hidden="true"><rect x="5" y="2" width="14" height="20" rx="7" fill="none" stroke="currentColor" stroke-width="2"/><rect x="8" y="5" width="8" height="14" rx="4" fill="currentColor" opacity=".5"/></svg>'
   };
+  var CTA = "Scan to start your UnionBank Altitude Card application";   // the claim screen's call to action, under the QR code
   function footer() { return '<footer class="brand"><img class="ub" src="assets/brand/ub-logo.png" alt="UnionBank"><span class="wordmark">ALTITUDE</span></footer>'; }
   function eyebrow(t) { return '<p class="eyebrow">' + t + '</p>'; }
   function names() { return S.players.map(function (p) { return esc(p.name); }).join(" &amp; "); }
@@ -269,14 +270,13 @@
     claim: function () {
       return '<section class="screen copper center claim"><div class="cols">' + S.players.map(function (p) {
           return '<div class="col">' + eyebrow((duo() ? esc(p.name) + " &middot; " : "") + "You won " + p.miles + " UB Miles") +
-            '<div class="card-art"><img class="card-ub" src="assets/brand/ub-logo.png" alt="UnionBank"><span class="chip"></span><span class="card-name">ALTITUDE</span></div>' +
-            '<p class="label">Your referral code</p>' +
+            '<div class="claim-card"><img class="card-art" src="assets/brand/altitude-card.webp" alt="UnionBank Altitude World Mastercard">' +
+            '<div class="claim-code"><p class="label">Your referral code</p>' +
             '<dot-text class="code" value="' + esc(p.code) + '"></dot-text>' +
-            '<div class="qr" data-url="' + esc(applyLink(p.code)) + '"></div></div>';
+            '<div class="qr" data-url="' + esc(applyLink(p.code)) + '"></div></div></div></div>';
         }).join("") + '</div>' +
-        '<p class="fine">Scan to start your UnionBank Altitude card application.<br>Keep your code &mdash; your UB Miles are credited once your card is approved.</p>' +
-        '<div class="row"><button class="pill solid host-only" data-action="apply">Apply now!</button>' +
-        '<button class="pill ghost host-only" data-action="continue">See the leaderboard</button></div>' + footer() + '</section>';
+        '<p class="fine">' + CTA + '.<br>Keep your code &mdash; your UB Miles are credited once your card is approved.</p>' +
+        '<div class="row"><button class="pill ghost host-only" data-action="continue">See the leaderboard</button></div>' + footer() + '</section>';
     },
     leaderboard: function () {
       return '<section class="screen copper center lb"><div id="board"></div>' +
@@ -379,7 +379,6 @@
       case "takeoff": takeOff(); break;
       case "continue": SFX.tap(); advance(); break;
       case "again": SFX.tap(); resetToAttract(); break;
-      case "apply": openApply(); break;
     }
   });
   function typeChar(c) {
@@ -427,8 +426,8 @@
     }
   });
 
-  // ---------------------------------------------------------------- operator panel + apply dialog
-  var dlg = $("#settings"), applyDlg = $("#apply");
+  // ---------------------------------------------------------------- operator panel
+  var dlg = $("#settings");
   function openSettings() {
     if (!IS_HOST || !dlg || dlg.open) return;
     settings = Store.settings();
@@ -460,16 +459,6 @@
       case "close": dlg.close(); break;
     }
   });
-  function openApply() {
-    if (!applyDlg) return;
-    $("#apply-body").innerHTML = S.players.map(function (p) {
-      return '<div class="apply-col">' + who(p) + '<div class="qr big" data-url="' + esc(applyLink(p.code)) + '"></div><dot-text class="code" fs value="' + esc(p.code) + '"></dot-text></div>';
-    }).join("");
-    $$(".qr", applyDlg).forEach(function (el) { drawQR(el, el.getAttribute("data-url")); });
-    applyDlg.showModal();
-    after("apply", 60000, function () { if (applyDlg.open) applyDlg.close(); });
-  }
-  if (applyDlg) applyDlg.addEventListener("click", function (e) { if (e.target === applyDlg || e.target.closest("[data-close]")) applyDlg.close(); });
 
   // ---------------------------------------------------------------- boot
   document.body.classList.toggle("client", !IS_HOST);

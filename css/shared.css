@@ -39,7 +39,7 @@ h2 { margin: 34px 0 10px; font-size: 48px; font-weight: 700; }
 /* leaderboard flip-board */
 .board { width: 1000px; margin: 0 auto; padding: 34px 44px 28px; border-radius: 22px; background: linear-gradient(180deg, rgba(255,255,255,.16), rgba(0,0,0,.1)), var(--copper); box-shadow: 0 30px 60px rgba(60,20,10,.3), inset 0 1px 0 rgba(255,255,255,.4); --dot: 6.5px; }
 .board-head { display: flex; align-items: center; gap: 22px; font-size: 40px; font-weight: 700; letter-spacing: .06em; }
-.board-head .plane { width: 64px; height: 64px; padding: 10px; border-radius: 12px; background: #fff; color: var(--copper); }
+.board-head .plane { display: block; width: 64px; height: 64px; }   /* white tile, the plane is cut out so the board's copper shows through */
 .board-cols { display: grid; grid-template-columns: 110px 1fr 180px; margin: 22px 20px 10px; font-size: 18px; letter-spacing: .22em; text-transform: uppercase; opacity: .92; }
 .board-cols span:nth-child(2) { text-align: center; }
 .board-cols span:last-child { text-align: right; }
@@ -50,7 +50,7 @@ h2 { margin: 34px 0 10px; font-size: 48px; font-weight: 700; }
 .lb-row.me { outline: 3px solid #fff; outline-offset: -3px; box-shadow: 0 0 26px rgba(255,255,255,.6); }
 .board-empty { margin: 30px 0 10px; text-align: center; font-size: 26px; opacity: .92; }
 
-/* operator + apply dialogs live in the top layer (viewport units, not the scaled stage) */
+/* the operator dialog lives in the top layer (viewport units, not the scaled stage) */
 dialog.dlg { border: 0; border-radius: 1.4vmin; padding: 3vmin 3.6vmin; width: min(94vw, 110vmin); max-height: 92vh; overflow: auto; background: #fbf7f2; color: #2a1a14; font-family: var(--font); font-size: 2.2vmin; box-shadow: 0 3vmin 8vmin rgba(0,0,0,.45); user-select: text; }
 dialog::backdrop { background: rgba(20,8,4,.62); }
 dialog.dlg h2 { margin: 0 0 1vmin; font-size: 3.4vmin; }
@@ -64,11 +64,3 @@ dialog.dlg button { font: inherit; padding: 1.1vmin 2.2vmin; border: 1px solid v
 dialog.dlg button.primary { background: var(--copper); color: #fff; }
 dialog.dlg button.danger { border-color: #b33; color: #b33; }
 dialog.dlg .muted { opacity: .72; font-size: 1.9vmin; line-height: 1.5; }
-dialog.apply { text-align: center; }
-dialog.apply .apply-wrap { display: flex; flex-direction: column; align-items: center; gap: 2.2vmin; }
-#apply-body { display: flex; gap: 6vmin; justify-content: center; }
-.apply-col { display: flex; flex-direction: column; align-items: center; gap: 1.6vmin; }
-.apply-col .who { font-size: 2.4vmin; letter-spacing: .2em; text-transform: uppercase; }
-.apply-col .qr.big { width: 38vmin; height: 38vmin; padding: 1.4vmin; border-radius: 1.2vmin; background: #fff; box-shadow: 0 1vmin 3vmin rgba(0,0,0,.18); }
-.apply-col .qr.big svg { width: 100%; height: 100%; display: block; }
-.apply-col .code { --dot: auto; font-size: 1vmin; }   /* fs attribute on the element → pitch follows font-size */

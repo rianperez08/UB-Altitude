@@ -23,7 +23,7 @@ screens in sync. Visuals and mechanics follow the deck **"UB FOR RIAN"** (page r
 | Reveal | Correct answer lights up, miles earned are shown, the window labels the city ("BARCELONA"). |
 | Final score | Flip-board tiles — **4/5** — "You've landed! Congratulations on completing your journey!" |
 | Earned reward | **105 UB MILES** on a dot-matrix bar, "₱16 = 1 UB Mile · 105 UB Miles = ₱1,680 equivalent spend · Keep exploring. Keep earning!" |
-| Claim | Referral code in the deck's format (e.g. `1325XRZ512`), card art, QR code → **Apply now!** (bigger QR in a dialog). |
+| Claim | The rose-gold Altitude card beside the referral code in the deck's format (e.g. `1325XRZ512`) and a QR code: "Scan to start your UnionBank Altitude Card application." **See the leaderboard** moves on. |
 | Leaderboard | Rank · Name · UB Miles flip-board, the guest's row highlighted. Back to attract after a while. |
 
 ### The five landings
@@ -166,7 +166,7 @@ js/stage.js         fixed-size stage scaled to the viewport
 css/                shared look (copper, pills, boards), IFE, window, leaderboard
 assets/cities/      the five aerial photos from the deck (portrait, for the window screens)
 assets/bg/          copper brushed-metal backgrounds, key visual
-assets/brand/       The Altitude Test badge, UnionBank logo (keyed out of the deck), favicon
+assets/brand/       The Altitude Test badge, UnionBank logo, landing (arrivals) icon, rose-gold Altitude card, favicon
 vendor/qrcode.js    QR generator (MIT, Kazuhiko Arase)
 server.js           static server + sync relay (zero dependencies)
 kiosk/              Chrome kiosk launchers
@@ -179,9 +179,9 @@ netlify.toml        static deploy config
 
 Assets were extracted from the deck's PDF export at the resolution it carries (1080×1920 city
 photos, 1920×1080 backgrounds). The copper background is a clean band of the deck's reward screen
-mirror-tiled to full height; the UnionBank mark was masked out of the IFE mock-up. The "ALTITUDE"
-wordmark is set in type. The card art on the claim screen is a CSS placeholder until real card
-artwork is supplied.
+mirror-tiled to full height. The UnionBank logo, the landing icon (leaderboard header) and the
+rose-gold card on the claim screen come from the brand kit ("UNIONBANK ALTITUDE"); the card is
+resized to 640 px WebP. The "ALTITUDE" wordmark is set in type.
 
 ---
 

@@ -5,7 +5,7 @@ window.ALTITUDE_CONFIG = {
   brand: {
     title: "The Altitude Test",
     tagline: "Unlock bonus travel miles with your elevated travel knowledge",
-    // Where the "Apply now" QR code sends the guest. The referral code is appended as ?ref=CODE.
+    // Where the claim screen's QR code sends the guest. The referral code is appended as ?ref=CODE.
     // Replace with the campaign's Altitude card application link before the event.
     applyUrl: "https://www.unionbankph.com/"
   },

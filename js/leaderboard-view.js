@@ -2,7 +2,7 @@
 (function () {
   "use strict";
   function esc(s) { return String(s == null ? "" : s).replace(/[&<>"']/g, function (c) { return { "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[c]; }); }
-  var PLANE = '<svg class="plane" viewBox="0 0 64 64" aria-hidden="true"><path fill="currentColor" d="M8 40l6-3 14 4 6-16-5-7 5-2 9 8 13 4c3 1 4 3 3 5s-4 3-7 2l-9-2-13 10 2 10-5 1-4-9-9-2-6 3z"/><path fill="currentColor" d="M6 52h52v3H6z"/></svg>';
+  var PLANE = '<img class="plane" src="assets/brand/landing-icon.png" alt="">';   // the arrivals tile from the brand kit
   window.renderLeaderboard = function (el, rows, highlight) {
     rows = rows || []; highlight = highlight || [];
     var html = '<div class="board"><div class="board-head">' + PLANE + '<span>LEADERBOARD</span></div>' +
